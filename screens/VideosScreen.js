@@ -4,7 +4,10 @@ import Parse from 'parse/react-native';
 
 import {VideoBlock} from '../components/VideoBlock';
 
-export default class LinksScreen extends React.Component {
+export default class VideosScreen extends React.Component {
+
+
+
   static navigationOptions = {
     title: 'Videos',
   };
@@ -42,12 +45,14 @@ export default class LinksScreen extends React.Component {
     };
   }
 
+  gotoVideo(video){
+    this.props.navigation.navigate("Video",{video:video})
+  }
+
   render() {
+
     return (
       <ScrollView
-        {/**
-         * 下拉刷新，详见文档 https://facebook.github.io/react-native/docs/refreshcontrol.html
-         */}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
@@ -60,12 +65,11 @@ export default class LinksScreen extends React.Component {
            * 用了一个List View,详见文档 https://facebook.github.io/react-native/docs/next/listviewdatasource.html
            * 然后内部包含的VideoBlock是自定义的，在components/VideoBlock， 传入了rowData
          */}
-        <Text>Video Screen</Text>
         <ListView
-
+          contentContainerStyle={styles.list}
           dataSource={this.state.dataSource}
           enableEmptySections={true}
-          renderRow={(rowData) => <VideoBlock video={rowData}/>}
+          renderRow={(rowData) => <VideoBlock style={styles.item} onPress={this.gotoVideo.bind(this,rowData)} video={rowData}/>}
         />
       </ScrollView>
     );
@@ -77,5 +81,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff',
+  },
+  list:{
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   }
 });
