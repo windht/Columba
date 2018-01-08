@@ -1,13 +1,24 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { AsyncStorage, Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
+import Parse from 'parse/react-native';
+
 
 export default class App extends React.Component {
+
+
+  
   state = {
     isLoadingComplete: false,
   };
+
+  componentWillMount() {
+    Parse.setAsyncStorage(AsyncStorage);
+    Parse.initialize("Columba");
+    Parse.serverURL = 'https://api.thebuilder.hk/columba';
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {

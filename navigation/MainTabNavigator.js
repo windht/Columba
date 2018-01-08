@@ -8,9 +8,13 @@ import Colors from '../constants/Colors';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import VideosScreen from '../screens/VideosScreen';
 
 export default TabNavigator(
   {
+    Videos: {
+      screen: VideosScreen,
+    },
     Home: {
       screen: HomeScreen,
     },
@@ -27,6 +31,9 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
+          case 'Videos':
+            iconName = Platform.OS === 'ios' ? `ios-videocam${focused ? '' : '-outline'}` : 'md-videocam';
+            break;
           case 'Home':
             iconName =
               Platform.OS === 'ios'
